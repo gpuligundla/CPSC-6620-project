@@ -21,8 +21,8 @@ CREATE TABLE topping (
     ToppingOnMedium DECIMAL(4 , 2 ) NOT NULL,
     ToppingOnLarge DECIMAL(4 , 2 ) NOT NULL,
     ToppingOnXLarge DECIMAL(4 , 2 ) NOT NULL,
+    ToppingCurInventory INT,
     ToppingMinInventory INT,
-    TOPPINGCurInventory INT,
     CONSTRAINT Topping_PK PRIMARY KEY (ToppingID)
 );
 
@@ -41,10 +41,10 @@ CREATE TABLE customer (
     CustomerID INT AUTO_INCREMENT,
     CustomerName VARCHAR(255) NOT NULL,
     CustomerPhone DECIMAL(10) NOT NULL,
-    CustomerAddress VARCHAR(255) NOT NULL,
-    CustomerCity VARCHAR(255) NOT NULL,
-    CustomerState VARCHAR(255) NOT NULL,
-    CustomerZipCode VARCHAR(255) NOT NULL,
+    CustomerAddress VARCHAR(255),
+    CustomerCity VARCHAR(255),
+    CustomerState VARCHAR(255),
+    CustomerZipCode VARCHAR(255),
     CONSTRAINT Customer_PK PRIMARY KEY (CustomerID)
 );
 
@@ -116,7 +116,7 @@ CREATE TABLE orderdiscount (
     OrderDiscountOrderID INT,
     OrderDiscountDiscountID INT,
     CONSTRAINT OrderDiscount_PK PRIMARY KEY(OrderDiscountOrderID, OrderDiscountDiscountID),
-    CONSTRAINT OrderDiscountOrderID_FK FOREIGN KEY(OrderDiscountOrderID) REFERENCES order_history(OrderID)
+    CONSTRAINT OrderDiscountOrderID_FK FOREIGN KEY(OrderDiscountOrderID) REFERENCES orderhistory(OrderID)
     ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT OrderDiscountDiscountID_FK FOREIGN KEY(OrderDiscountDiscountID) REFERENCES discount(DiscountID)
     ON DELETE CASCADE ON UPDATE CASCADE
@@ -131,7 +131,7 @@ CREATE TABLE dinein (
     DineInTableNum INT,
     CONSTRAINT Dinein_PK PRIMARY KEY (DineInID),
     CONSTRAINT Dinein_FK FOREIGN KEY (DineInID)
-        REFERENCES order_history (OrderID)
+        REFERENCES orderhistory (OrderID)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -141,7 +141,7 @@ CREATE TABLE pickup (
     PickupCustomerID INT,
     CONSTRAINT Pickup_PK PRIMARY KEY (PickupID),
     CONSTRAINT Pickup_FK FOREIGN KEY (PickupID)
-        REFERENCES order_history (OrderID)
+        REFERENCES orderhistory (OrderID)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT PickupCustomerID_FK FOREIGN KEY (PickupCustomerID)
         REFERENCES customer (CustomerID)
@@ -154,7 +154,7 @@ CREATE TABLE homedelivery (
     HomeDeliveryCustomerID INT,
     CONSTRAINT HomeDelivery_PK PRIMARY KEY (HomeDeliveryID),
     CONSTRAINT HomeDelivery_FK FOREIGN KEY (HomeDeliveryID)
-        REFERENCES order_history (OrderID)
+        REFERENCES orderhistory (OrderID)
         ON DELETE CASCADE ON UPDATE CASCADE,
     CONSTRAINT HomeDeliveryCustomerID_FK FOREIGN KEY (HomeDeliveryCustomerID)
         REFERENCES customer (CustomerID)
