@@ -54,6 +54,7 @@ CREATE TABLE orderhistory (
     OrderDateTime DATETIME NOT NULL,
     OrderPrice DECIMAL(10 , 2 ) NOT NULL,
     OrderCTC DECIMAL(10 , 2 ) NOT NULL,
+    OrderType VARCHAR(255) NOT NULL,
     OrderIsReady BOOLEAN DEFAULT 0,
     CONSTRAINT Order_PK PRIMARY KEY (OrderID)
 );

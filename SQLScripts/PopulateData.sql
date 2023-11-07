@@ -70,15 +70,15 @@ VALUES
 
 
 -- Populating orderhistory Table
-INSERT INTO orderhistory(OrderDateTime, OrderPrice, OrderCTC, OrderIsReady) 
+INSERT INTO orderhistory(OrderDateTime, OrderPrice, OrderCTC, OrderType, OrderIsReady) 
 VALUES 
-('2023-03-05 12:03:15', 20.75 ,3.68 ,1),
-('2023-04-03 12:05:11', 19.78, 4.63, 1),
-('2023-03-03 09:30:00', 89.28, 19.8, 1),
-('2023-04-20 19:11:22', 86.19, 23.62, 1),
-('2023-03-02 17:30:00', 27.45, 7.88, 1),
-('2023-03-02 18:17:00', 25.81, 4.24, 1),
-('2023-04-13 20:32:11', 37.25, 6, 1);
+('2023-03-05 12:03:15', 20.75 ,3.68, "dine-in" ,1),
+('2023-04-03 12:05:11', 19.78, 4.63, "dine-in",  1),
+('2023-03-03 09:30:00', 89.28, 19.8, "pickup", 1),
+('2023-04-20 19:11:22', 86.19, 23.62, "home-delivery", 1),
+('2023-03-02 17:30:00', 27.45, 7.88, "pickup", 1),
+('2023-03-02 18:17:00', 25.81, 4.24, "home-delivery", 1),
+('2023-04-13 20:32:11', 37.25, 6, "home-delivery", 1);
 
 -- Populating pizza Table
 INSERT INTO pizza(PizzaCrustType, PizzaSize, PizzaPrice, PizzaCTC, PizzaIsReady, PizzaOrderID, PizzaBasePriceID) 
@@ -139,10 +139,11 @@ VALUES
 -- Populating pickup Table
 INSERT INTO pickup(PickupID, PickupCustomerID) 
 VALUES 
-(3, 1);
+(3, 1), (5, 2);
 
 -- Populating homedelivery Table
 INSERT INTO homedelivery(HomeDeliveryID, HomeDeliveryCustomerID) 
-VALUES 
+VALUES
+(4, 1), 
 (6, 3), 
 (7, 4);
