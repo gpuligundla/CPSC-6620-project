@@ -197,9 +197,22 @@ public class Menu {
 				System.out.println("Which customer is this order for? Enter ID Number:");
 				int customerID = Integer.parseInt(reader.readLine());
 				deliveryCustomer = DBNinja.findCustomerByID(customerID);
+				System.out.println("What is the House/Apt Number for this order? (e.g., 111)");
+				int houseNum = Integer.parseInt(reader.readLine());
+				System.out.println("What is the Street for this order? (e.g., Smile Street)");
+				String street = reader.readLine();
+				String fullStreet = houseNum +  " " + street;
+				System.out.println("What is the City for this order? (e.g., Greenville)");
+				String city = reader.readLine();
+				System.out.println("What is the State for this order? (e.g., SC)");
+				String state = reader.readLine();
+				System.out.println("What is the Zip Code for this order? (e.g., 20605)");
+				String zipcode = reader.readLine();
+				deliveryCustomer.setAddress(fullStreet, city, state, zipcode);
+				DBNinja.updateCustomerAdd(deliveryCustomer);
 			}
 			else {
-				System.out.println("What is this customer's name (first <space> last");
+				System.out.println("What is this customer's name (first <space> last)");
 				String name = reader.readLine();
 				String[] nameArr = name.split(" ");
 				System.out.println("What is this customer's phone number (##########) (No dash/space)");
@@ -220,6 +233,8 @@ public class Menu {
 				DBNinja.addCustomer(newCustomer);
 				ArrayList<Customer> customerList = DBNinja.getCustomerList();
 				deliveryCustomer = customerList.get(customerList.size() - 1);
+				newCustomer.setCustID(deliveryCustomer.getCustID());
+				DBNinja.updateCustomerAdd(newCustomer);
 			}
 			newOrder = new DeliveryOrder(0, deliveryCustomer.getCustID(), curTimestamp, 0.0, 0.0, 0, deliveryCustomer.getAddress());
 			DBNinja.addOrder(newOrder);
@@ -378,8 +393,9 @@ public class Menu {
 						else {
 							System.out.println((DeliveryOrder)detailedOrder);
 						}
-					}
-					else {
+					} else if (detailedInput==-1) {
+						System.out.println("Returning to menu");
+					} else {
 						System.out.println("I don't understand that input, returning to menu");
 					}
 				}
@@ -415,6 +431,9 @@ public class Menu {
 						else {
 							System.out.println((DeliveryOrder)detailedOrder);
 						}
+					}
+					else if (detailedInput==-1) {
+						System.out.println("Returning to menu");
 					}
 					else {
 						System.out.println("I don't understand that input, returning to menu");
@@ -459,6 +478,9 @@ public class Menu {
 							System.out.println((DeliveryOrder)detailedOrder);
 						}
 					}
+					else if (detailedInput==-1) {
+						System.out.println("Returning to menu");
+					}
 					else {
 						System.out.println("I don't understand that input, returning to menu");
 					}
@@ -499,6 +521,9 @@ public class Menu {
 							else {
 								System.out.println((DeliveryOrder)detailedOrder);
 							}
+						}
+						else if (detailedInput==-1) {
+							System.out.println("Returning to menu");
 						}
 						else {
 							System.out.println("I don't understand that input, returning to menu");

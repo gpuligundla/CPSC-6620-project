@@ -245,17 +245,37 @@ public final class DBNinja {
 		if(!connect_to_db()) {
 			System.out.println("Refused to connect to DB");
 		}
-		String query = "INSERT INTO customer(CustomerName, CustomerPhone, CustomerAddress) VALUES(?, ?, ?);";
+		String query = "INSERT INTO customer(CustomerName, CustomerPhone) VALUES(?, ?);";
 
 		PreparedStatement prepStatement = conn.prepareStatement(query);
 		String name = c.getFName() + " " + c.getLName();
 		prepStatement.setString(1, name);
 		prepStatement.setLong(2, Long.parseLong(c.getPhone()));
-		prepStatement.setString(3, c.getAddress());
 		prepStatement.execute();
 		conn.close();
 	}
+	public static void updateCustomerAdd(Customer c) throws SQLException, IOException {
+		if(!connect_to_db()) {
+			System.out.println("Refused to connect to DB");
+		}
+		String query = "UPDATE customer SET CustomerAddress=?, CustomerCity=?, CustomerState=?, CustomerZipCode=? WHERE CustomerID=?";
 
+		PreparedStatement prepStatement = conn.prepareStatement(query);
+
+		String[] address = c.getAddress().split("/n");
+		String street = address[0];
+		String city = address[1];
+		String state = address[2];
+		String zip = address[3];
+		prepStatement.setString(1, street);
+		prepStatement.setString(2, city);
+		prepStatement.setString(3, state);
+		prepStatement.setString(4, zip);
+		prepStatement.setInt(5, c.getCustID());
+
+		prepStatement.execute();
+		conn.close();
+	}
 	public static Pizza getLastPizza() throws SQLException, IOException {
 		Pizza item = null;
 		if(!connect_to_db()) {
